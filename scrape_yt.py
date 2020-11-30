@@ -1,32 +1,23 @@
-from urllib.request import Request, urlopen
-import requests
-from bs4 import BeautifulSoup
-import sys
+from selenium import webdriver
+import pandas as pd
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import json
 from datetime import datetime
 
 apoop = "https://www.youtube.com/c/milosh9k/videos"
 
-r = requests.get(apoop)
-page = r.text
-parsed_page = BeautifulSoup(page,'lxml')
-containers = parsed_page.find_all('script')
+## Test Code
 
-content = containers[28].get_text()
-stripped_content = content[20:len(content)-1]
-json_content = json.loads(stripped_content)
+import time
+from selenium import webdriver
 
-vid_list = []
-
-for key in json_content['contents']['twoColumnBrowseResultsRenderer']['tabs']:    
-    vid_list.append(key)
-
-for vid in vid_list:
-    for key in vid:
-        print(key)
-
-
-for item in vid_list[1]['tabRenderer']['content']['sectionListRenderer']['contents'][0]['itemSectionRenderer']['contents'][0]['gridRenderer']['items']: 
-    url = item['gridVideoRenderer']['navigationEndpoint']['commandMetadata']['webCommandMetadata']['url']
-    print(url)
-
+driver = webdriver.Chrome('C:\bin')  # Optional argument, if not specified will search path.
+driver.get('http://www.google.com/');
+time.sleep(5) # Let the user actually see something!
+search_box = driver.find_element_by_name('q')
+search_box.send_keys('ChromeDriver')
+search_box.submit()
+time.sleep(5) # Let the user actually see something!
+driver.quit()
